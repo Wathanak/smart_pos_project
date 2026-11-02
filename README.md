@@ -1,5 +1,3 @@
-# smart_pos_project
-
 # SMART POS System
 
 **SMART POS:** is a self-developed Point of Sale (POS) system designed to streamline sales operations and inventory management through an integrated software solution.
