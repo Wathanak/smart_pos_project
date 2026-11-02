@@ -1,7 +1,0 @@
-﻿cat > .gitignore << 'EOF'
-*.exe
-*.o
-__pycache__/
-/SMART_backend/smart_backend
-.DS_Store
-EOF
