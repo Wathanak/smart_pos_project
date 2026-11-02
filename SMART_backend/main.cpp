@@ -22,7 +22,6 @@ struct CartItem {
     int quantity;
 };
 
-// Forward declaration so login functions know admin_mainMenu exists
 void admin_mainMenu();
 
 void view_sales_history() {
@@ -39,7 +38,7 @@ void view_sales_history() {
         inHistory.close();
     }
     cout << "==================================================" << endl;
-    admin_mainMenu(); // Return to admin menu
+    admin_mainMenu(); 
 }
 
 void view_daily_summary() {
@@ -53,7 +52,6 @@ void view_daily_summary() {
         double total_revenue_usd = 0.0;
         int total_transactions = 0;
 
-        // Read the file and look for the lines where we saved "TOTAL_USD:"
         while (getline(inHistory, line)) {
             if (line.find("TOTAL_USD:") != string::npos) {
                 // Extract the number part after "TOTAL_USD:"
@@ -69,13 +67,12 @@ void view_daily_summary() {
         cout << "Total Revenue (KHR): " << (total_revenue_usd * 4000) << " KHR" << endl;
     }
     cout << "==================================================" << endl;
-    admin_mainMenu(); // Return to admin menu
+    admin_mainMenu(); 
 }
 
 void managing_product() {
     cout << "\n=============== Managing Product ===============" << endl; 
     
-    // 1. Load the current inventory first
     Product inventory[MAX_PRODUCTS];
     int inventoryCount = 0; 
     ifstream inProductFile("product.txt");
@@ -103,7 +100,6 @@ void managing_product() {
         cout << "Warning: Could not open product.txt. Starting with empty inventory." << endl;
     }
 
-    // 2. Sub-menu for managing products
     cout << "1. View all products" << endl;
     cout << "2. Add a new product" << endl;
     cout << "3. Update existing product stock/price" << endl;
@@ -163,7 +159,6 @@ void managing_product() {
         return;
     }
 
-    // 3. Save changes back to file if they added or updated something
     if (choice == 2 || choice == 3) {
         ofstream outProductFile("product.txt");
         for (int i = 0; i < inventoryCount; i++) {
@@ -173,7 +168,7 @@ void managing_product() {
         outProductFile.close();
     }
     
-    managing_product(); // Loop back to product menu
+    managing_product(); 
 }
 
 void admin_mainMenu() {
@@ -190,7 +185,7 @@ void admin_mainMenu() {
 
     switch (choice_admin_mainMenu) {
         case 1: 
-            view_sales_history();  // Fixed typo here
+            view_sales_history();  
             break;
         case 2: 
             view_daily_summary();
@@ -200,16 +195,12 @@ void admin_mainMenu() {
             break;
         case 4:
             cout << "Logging out..." << endl;
-            return; // Goes back to main login screen
+            return; 
         default:
             cout << "Invalid Input! \n" << endl;
             admin_mainMenu();  
     }
 }
-
-// ==========================================
-// CASHIER FUNCTIONS
-// ==========================================
 
 void cashier_mainMenu() {
     ifstream inProductFile("product.txt");
@@ -368,28 +359,23 @@ void cashier_mainMenu() {
         outProductFile.close();
     }
 
-    // --- NEW LOGIC: RECORD SALE IN HISTORY FOR ADMIN ---
-    ofstream outHistory("sales_history.txt", ios::app); // ios::app ensures we don't erase past sales
+    ofstream outHistory("sales_history.txt", ios::app); 
     if (outHistory.is_open()) {
         outHistory << "--- NEW SALE ---" << endl;
         for (int i = 0; i < cartCount; i++) {
             outHistory << cart[i].quantity << "x " << cart[i].product.name << endl;
         }
-        // Save this exact line format so the summary function can read it easily
+
         outHistory << "TOTAL_USD:" << grand_total << endl; 
         outHistory << "----------------" << endl;
         outHistory.close();
     }
 }
 
-// ==========================================
-// LOGIN & MAIN FUNCTIONS
-// ==========================================
-
 void login_admin(){
     string admin_username;
     string admin_username_txt; 
-    string admin_password;      // Changed to string to prevent crash on non-number input
+    string admin_password;      
     string admin_password_txt; 
     char seperator; 
 
@@ -425,7 +411,7 @@ void login_admin(){
 void login_cashier(){
     string cashier_username;
     string cashier_username_txt; 
-    string cashier_password;   // Changed to string
+    string cashier_password;  
     string cashier_password_txt; 
     char seperator; 
 
