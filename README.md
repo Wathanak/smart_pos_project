@@ -1,2 +1,1 @@
-# smart-pos
-# smart-pos
+# smart_pos_project
